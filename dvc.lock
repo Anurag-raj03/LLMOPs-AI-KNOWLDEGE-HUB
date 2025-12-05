@@ -1,0 +1,26 @@
+schema: '2.0'
+stages:
+  load_docs:
+    cmd: python src/ingestion/load_docs.py
+    deps:
+    - path: data/processed/arxiv_processed.csv
+      hash: md5
+      md5: 34a81e9f56289d769504e2f769c271ec
+      size: 17645386
+    outs:
+    - path: data/processed/loaded_docs.jsonl
+      hash: md5
+      md5: ec845b00e9244fc7bfe4a56eb28edaf6
+      size: 18211303
+  preprocess:
+    cmd: python src/ingestion/preprocess.py
+    deps:
+    - path: data/processed/loaded_docs.jsonl
+      hash: md5
+      md5: ec845b00e9244fc7bfe4a56eb28edaf6
+      size: 18211303
+    outs:
+    - path: data/processed/cleaned_docs.jsonl
+      hash: md5
+      md5: 48277f89648e692926633e478da895c1
+      size: 17958853
