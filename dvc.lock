@@ -5,22 +5,22 @@ stages:
     deps:
     - path: data/processed/arxiv_processed.csv
       hash: md5
-      md5: 34a81e9f56289d769504e2f769c271ec
-      size: 17645386
+      md5: bbcd808703397fe6ffdb2b903e8f73a7
+      size: 898176
     outs:
     - path: data/processed/loaded_docs.jsonl
       hash: md5
-      md5: ec845b00e9244fc7bfe4a56eb28edaf6
-      size: 18211303
+      md5: 701dfd52ba69da353885d5dc5de68e53
+      size: 926446
   preprocess:
     cmd: python src/ingestion/preprocess.py
     deps:
     - path: data/processed/loaded_docs.jsonl
       hash: md5
-      md5: ec845b00e9244fc7bfe4a56eb28edaf6
-      size: 18211303
+      md5: 701dfd52ba69da353885d5dc5de68e53
+      size: 926446
     outs:
     - path: data/processed/cleaned_docs.jsonl
       hash: md5
-      md5: 48277f89648e692926633e478da895c1
-      size: 17958853
+      md5: 311c18b7eb992558cb53f93a146d6042
+      size: 912363
