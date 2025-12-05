@@ -1,0 +1,30 @@
+global:
+  log_level: INFO
+  queue_poll_interval: 60
+  langsmith_project: "ai-knowledgehub"
+  prometheus_endpoint: "http://prometheus:9090"
+
+agents:
+  ingestion_agent:
+    queue: "data_ingestion_queue"
+    interval_sec: 1800
+
+  retriever_agent:
+    queue: "retriever_update_queue"
+    interval_sec: 3600
+
+  reasoning_agent:
+    enabled: true
+
+  email_agent:
+    enabled: true
+    gmail_user: "anuragraj4483@gmail.com"
+    label_filter: "INBOX"
+    reply_signature: "\n\n--\nAI KnowledgeHub"
+
+  monitor_agent:
+    metrics_push_interval: 600
+
+  human_review_agent:
+    queue: "review_queue"
+    db_table: "HumanReviews"

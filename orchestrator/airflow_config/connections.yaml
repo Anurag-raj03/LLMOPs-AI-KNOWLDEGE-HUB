@@ -1,0 +1,13 @@
+aws_default:
+  conn_type: aws
+  login: "{{ AWS_ACCESS_KEY_ID }}"
+  password: "{{ AWS_SECRET_ACCESS_KEY }}"
+  extra: '{"region_name": "ap-south-1"}'
+
+gmail_api:
+  conn_type: http
+  extra: '{"api_base": "https://gmail.googleapis.com"}'
+
+langsmith_api:
+  conn_type: http
+  extra: '{"api_key": "{{ LANGSMITH_API_KEY }}"}'

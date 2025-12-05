@@ -1,0 +1,6 @@
+DATA_PATH = "data/"
+PROCESSED_PATH = "data/processed/"
+EMBEDDINGS_PATH = "data/embeddings/"
+FEEDBACK_PATH = "data/feedback_data/"
+S3_BUCKET = "ai-knowledgehub-bucket"
+REGION = "us-east-1"

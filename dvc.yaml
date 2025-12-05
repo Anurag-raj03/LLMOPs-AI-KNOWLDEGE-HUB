@@ -1,0 +1,35 @@
+stages:
+  load_docs:
+    cmd: python src/ingestion/load_docs.py
+    deps:
+      - data/processed/arxiv_processed.csv
+    outs:
+      - data/processed/loaded_docs.jsonl
+
+  preprocess:
+    cmd: python src/ingestion/preprocess.py
+    deps:
+      - data/processed/loaded_docs.jsonl
+    outs:
+      - data/processed/cleaned_docs.jsonl
+
+  chunk:
+    cmd: python src/ingestion/chunker.py
+    deps:
+      - data/processed/cleaned_docs.jsonl
+    outs:
+      - data/processed/processed_chunks.jsonl
+
+  metadata:
+    cmd: python src/ingestion/metadata_extractor.py
+    deps:
+      - data/processed/processed_chunks.jsonl
+    outs:
+      - data/processed/enriched_chunks.jsonl
+
+  embed:
+    cmd: python src/ingestion/embed_docs.py
+    deps:
+      - data/processed/enriched_chunks.jsonl
+    outs:
+      - data/embeddings/

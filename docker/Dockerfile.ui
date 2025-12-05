@@ -1,0 +1,19 @@
+FROM python:3.11-slim
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    git gcc curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip first
+RUN pip install --upgrade pip setuptools wheel
+
+COPY requirements-ui.txt .
+
+RUN pip install --no-cache-dir --default-timeout=300 -r requirements-ui.txt
+
+COPY ui ./ui
+COPY src ./src
+
+EXPOSE 8501
+CMD ["streamlit", "run", "ui/Home.py", "--server.port=8501", "--server.address=0.0.0.0"]

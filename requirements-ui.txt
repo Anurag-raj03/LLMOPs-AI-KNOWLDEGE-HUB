@@ -1,0 +1,15 @@
+streamlit
+plotly
+altair
+matplotlib
+pillow
+streamlit-aggrid
+streamlit-option-menu
+pandas
+numpy
+requests
+python-dotenv
+seaborn
+pydantic
+beautifulsoup4
+html2text

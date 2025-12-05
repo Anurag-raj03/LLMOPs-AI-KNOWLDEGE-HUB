@@ -1,0 +1,20 @@
+graph:
+  name: "ai-knowledgehub-rag-graph"
+  description: "LangGraph-based reasoning flow for hybrid RAG with evaluation and feedback."
+
+nodes:
+  - id: retriever
+    type: retriever_node
+    next: generator
+  - id: generator
+    type: generator_node
+    next: summarizer
+  - id: summarizer
+    type: summarizer_node
+    next: evaluator
+  - id: evaluator
+    type: evaluator_node
+    next: feedback
+  - id: feedback
+    type: feedback_node
+    next: end

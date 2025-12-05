@@ -1,0 +1,21 @@
+FROM python:3.11-slim
+WORKDIR /app
+
+# Includes system dependencies for compiled packages
+RUN apt-get update && apt-get install -y \
+    git gcc curl build-essential libpq-dev libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+
+RUN pip install --upgrade pip
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src ./src
+COPY models ./models
+
+ENV PYTHONUNBUFFERED=1
+ENV AGENT_MODE=worker
+
+CMD ["python", "src/agents/agent_worker.py"]

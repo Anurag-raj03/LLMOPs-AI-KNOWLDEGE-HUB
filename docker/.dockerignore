@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Data files (don't copy unless needed)
+*.csv
+*.parquet
+*.h5
+*.pkl
+*.pickle
+notebooks/
+*.ipynb
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+
+# DVC
+.dvc/
+*.dvc
+
+# MLflow
+mlruns/
+
+# Large model files (mount as volume instead)
+models/*.bin
+models/*.safetensors
+models/*.pt
+models/*.pth
+
+# Temporary files
+*.log
+*.tmp

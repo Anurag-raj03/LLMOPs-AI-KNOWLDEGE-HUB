@@ -1,0 +1,47 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    gcc \
+    g++ \
+    wget \
+    curl \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip first
+RUN pip install --upgrade pip setuptools wheel
+
+# Install PyTorch separately first (large dependency)
+RUN pip install --no-cache-dir --default-timeout=500 \
+    torch==2.3.1 \
+    torchvision==0.18.1 \
+    torchaudio==2.3.1
+
+# Copy and install requirements
+COPY requirements.txt .
+
+# Install in batches to avoid timeout
+RUN pip install --no-cache-dir --default-timeout=500 \
+    transformers==4.41.0 \
+    accelerate==0.31.0 \
+    sentence-transformers==3.0.1 \
+    faiss-cpu==1.8.0
+
+RUN pip install --no-cache-dir --default-timeout=500 \
+    langchain==0.2.5 \
+    langgraph==0.0.69 \
+    langchain-community==0.2.5
+
+RUN pip install --no-cache-dir --default-timeout=500 -r requirements.txt
+
+COPY src ./src
+COPY models ./models
+
+EXPOSE 8000
+ENV PYTHONUNBUFFERED=1
+CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]

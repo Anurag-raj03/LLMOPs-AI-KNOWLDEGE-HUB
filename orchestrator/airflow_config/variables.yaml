@@ -1,0 +1,8 @@
+dag_frequency:
+  ingestion: "@daily"
+  retraining: "@weekly"
+  feedback: "0 */6 * * *"
+  email_agent: "*/15 * * * *"
+
+max_parallel_agents: 3
+feedback_batch_size: 50

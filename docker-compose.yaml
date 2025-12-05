@@ -1,0 +1,83 @@
+version: "3.9"
+
+services:
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: api-service
+    ports:
+      - "8000:8000"
+    environment:
+      AWS_REGION: "ap-south-1"
+      S3_BUCKET: "local-bucket"
+      REDIS_HOST: "redis"
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  ui:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.ui
+    container_name: ui-service
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  agent:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.agent
+    container_name: agent-service
+    command: python src/agents/retriever_agent.py
+    environment:
+      AGENT_NAME: "RetrieverAgent"
+      REDIS_HOST: "redis"
+    depends_on:
+      - api
+      - redis
+    restart: unless-stopped
+
+  # Trainer - commented out by default, uncomment when needed
+  # trainer:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/Dockerfile.trainer
+  #   container_name: trainer-service
+  #   volumes:
+  #     - ./models:/app/models
+  #     - ./data:/app/data
+
+  airflow:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.airflow
+    container_name: airflow
+    command: >
+      bash -c "
+      airflow db init &&
+      airflow users create --username admin --password admin --firstname AI --lastname Ops --role Admin --email admin@example.com || true &&
+      airflow scheduler &
+      airflow webserver
+      "
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__CORE__EXECUTOR: "LocalExecutor"
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: "sqlite:////opt/airflow/airflow.db"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./orchestrator/dags:/opt/airflow/dags
+      - ./orchestrator/plugins:/opt/airflow/plugins
+    restart: unless-stopped

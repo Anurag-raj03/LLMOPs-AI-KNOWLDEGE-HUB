@@ -1,0 +1,6 @@
+{
+  "max_length": 512,
+  "truncation": true,
+  "padding": "max_length",
+  "model_max_length": 512
+}

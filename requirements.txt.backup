@@ -1,0 +1,54 @@
+# Original requirements.txt (before fixes)
+# This file is kept for reference
+# DO NOT USE - has compatibility issues
+
+numpy
+pandas
+tqdm
+regex
+python-dotenv
+PyYAML
+requests
+aiohttp
+httpx
+uvicorn[standard]
+orjson
+pydantic
+tenacity
+transformers
+accelerate
+sentence-transformers
+faiss-cpu
+rank-bm25
+torch
+bitsandbytes>=0.43.0; platform_system != "Windows"
+langchain
+langgraph
+langchain-community
+langsmith
+huggingface-hub
+scikit-learn
+evaluate
+datasets
+ragas
+dvc
+dvc-s3
+mlflow
+joblib
+celery
+redis
+kombu
+boto3
+botocore
+aioaws
+python-decouple
+fastapi
+starlette
+jinja2
+python-multipart
+aiofiles
+email-validator
+gunicorn
+prometheus-client
+opentelemetry-api
+opentelemetry-sdk
